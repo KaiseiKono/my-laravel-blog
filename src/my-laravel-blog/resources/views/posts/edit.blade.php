@@ -1,5 +1,6 @@
-<form action="{{ route('posts.update', $post->id) }}", method="PUT">
+<form action="{{ route('posts.update', $post->id) }}"  method="POST">
     @csrf
+    @method('PUT')
     <div>
         <label for="title">タイトル</label>
         <input type="text" name="title" id="title" value="{{ $post->title }}" required>

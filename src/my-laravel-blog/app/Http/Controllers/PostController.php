@@ -38,7 +38,7 @@ class PostController extends Controller {
                 'content' => 'required',
             ]);
             $post->update($validatedData);
-            return redirect()->route('posts.index');
+            return redirect()->route('posts.show', $post->id);
     }
     public function destroy($id) {
         $post = Post::findOrFail($id);
