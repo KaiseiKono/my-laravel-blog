@@ -1,0 +1,12 @@
+:root {
+    --color-bg: #fafafa;
+    --color-text: #333333;
+    --color-accent: #3b82f6;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+    line-height: 1.8;
+}

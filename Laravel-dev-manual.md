@@ -168,7 +168,11 @@ docker compose up -d
 まずDBの設計を確定させる。コンテナの中に入って作業する。
 
 ```powershell
-docker exec -it php-fpm bash
+docker compose exec -it php-fpm bash
+
+docker compose exec node sh
+cd my-laravel-blog
+npm run dev
 ```
 
 ```bash
