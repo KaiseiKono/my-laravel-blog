@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-light">
+<body class="bg-light" x-data="{deleteUrl: ''}">
     <div class="container py-4">
         <h1 class="display-5 fw-bold pt-3">{{ $post->title }}</h1>
 
@@ -27,7 +27,7 @@
                 <button type="button" class="btn btn-outline-danger btn-sm"
                                 data-bs-toggle="modal"
                                 data-bs-target="#deleteModal"
-                                data-delete-url="{{ route('posts.destroy', $post->id) }}">
+                                @click="deleteUrl = '{{ route('posts.destroy', $post->id) }}'">
                                 投稿を削除する
                             </button>
             </div>

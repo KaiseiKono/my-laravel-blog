@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-light">
+<body class="bg-light"  x-data="{deleteUrl: ''}">
 
     <!-- ヘッダー -->
     <nav class="navbar navbar-dark bg-dark mb-4">
@@ -34,12 +34,14 @@
                                 </a>
                                 <p class="text-muted small mb-0">作成日:{{$post->created_at}}</p>
                             </div>
-                            <button type="button" class="btn btn-outline-danger btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteModal"
-                                data-delete-url="{{ route('posts.destroy', $post->id) }}">
-                                投稿を削除する
-                            </button>
+                            <div>
+                                <button type="button" class="btn btn-outline-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    @click="deleteUrl = '{{ route('posts.destroy', $post->id) }}'">
+                                    投稿を削除する
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -67,7 +69,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-                    <form id="delete-form" method="POST" action="">
+                    <form id="delete-form" method="POST" :action="deleteUrl">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">削除する</button>
