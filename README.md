@@ -34,22 +34,18 @@ docker compose up -d
 cp src/my-laravel-blog/.env.example src/my-laravel-blog/.env
 
 docker compose exec php bash
-cd /var/www/my-laravel-blog
+cd my-laravel-blog
 composer install
 php artisan key:generate
 php artisan migrate
-chown -R www-data:www-data storage bootstrap/cache
 exit
 
 docker compose exec node sh
-cd /var/www/my-laravel-blog
+cd my-laravel-blog
 npm install
-npm run dev
 npm run build
 exit
 ```
-
-コンテナに入って手で実行する場合は、`/var/www/my-laravel-blog` に移動してからコマンドを実行してください。
 
 ### アクセス先
 
@@ -112,8 +108,6 @@ php artisan test --filter=PostCrudTest
 | ---------- | ------ | -------------------------------------------------------------------------- |
 | 保存       | ボタン | 入力内容をバリデーションし、問題なければ投稿を保存して一覧ページに遷移する |
 | キャンセル | ボタン | 確認ダイアログを表示し、入力内容を破棄して一覧ページに戻る                 |
-
-<!-- 強調 -->
 
 <mark>Alpineを用いて、削除確認モーダルを再実装・HTMLを直接書けるように仕様変更した。</mark>
 
