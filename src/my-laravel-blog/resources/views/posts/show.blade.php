@@ -35,7 +35,7 @@
 
         <div class="card shadow-sm">
             <div class="card-body">
-                <p class="fs-3 my-3">{{ $post->content }}</p>
+                <p class="fs-3 my-3">{!! $post->content !!}</p>
             </div>
         </div>
 

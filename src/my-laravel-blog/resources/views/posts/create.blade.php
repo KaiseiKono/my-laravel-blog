@@ -31,9 +31,9 @@
                         <label for="title" required class="d-block form-label">タイトル</label>
                         <input type="text" class="d-block form-control" name="title" id="title" required>
                     </div>
-                    <div>
+                    <div x-data x-init="ClassicEditor.create($refs.editor).catch(error => { console.error(error); });" class="mb-3">
                         <label for="content" class="d-block form-label">内容</label>
-                        <textarea name="content" class="d-block form-control" id="content" required></textarea>
+                        <textarea name="content" class="d-block form-control" id="editor" required x-ref="editor"></textarea>
                     </div>
                 </div>
             </div>

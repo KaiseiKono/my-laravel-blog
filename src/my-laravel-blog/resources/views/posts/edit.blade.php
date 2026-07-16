@@ -30,9 +30,9 @@
                         <label for="title" required class="d-block form-label">タイトル</label>
                         <input type="text" name="title" id="title" value="{{ $post->title }}" required class="d-block form-control">
                     </div>
-                    <div>
+                    <div x-data x-init="ClassicEditor.create($refs.editor).catch(error => { console.error(error); });" class="mb-3">
                         <label for="content" class="d-block form-label" required>内容</label>
-                        <textarea name="content" id="content" required class="d-block form-control">{{ $post->content }}</textarea>
+                        <textarea name="content" id="editor" required class="d-block form-control" x-ref="editor">{{ $post->content }}</textarea>
                     </div>
                 </div>
             </div>
