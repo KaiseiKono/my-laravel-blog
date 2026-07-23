@@ -417,9 +417,14 @@ php artisan test
 `docker-compose up` 初回起動時、`phpmyadmin/sessions` ディレクトリの
 所有者が `root` になり、コンテナ内から書き込めずエラーになることがあります。
 
-以下を実行して権限を修正してください。
+以下をphpコンテナ内で実行して権限を修正してください。
 
 ```bash
-sudo chmod -R 777 phpmyadmin/sessions
-docker-compose restart phpmyadmin
+cd /var/www/my-laravel-blog
+
+chown -R www-data:www-data storage bootstrap/cache
+
+chmod -R 775 storage bootstrap/cache
+
+php artisan optimize:clear
 ```
