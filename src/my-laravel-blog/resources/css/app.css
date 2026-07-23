@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
     --color-bg: #fafafa;
     --color-text: #333333;
@@ -19,4 +23,34 @@ textarea {
     resize: none;
     width: 300px;
     height: 150px;
+}
+
+.has-error .ck-editor__editable {
+    border: 1px solid #dc3545 !important;
+}
+
+.has-error .ck-editor__editable:focus {
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+
+.post-content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.post-content h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0.8rem 0;
+}
+
+.post-content p {
+    margin-bottom: 1rem;
 }

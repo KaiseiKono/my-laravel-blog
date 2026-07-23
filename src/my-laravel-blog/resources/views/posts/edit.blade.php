@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$post->title}}を編集</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+@extends('layouts.app')
 
-</head>
-<body class="bg-light">
-    <!-- ヘッダー -->
-    <nav class="navbar navbar-dark bg-dark mb-4">
-        <div class="container">
-            <span class="navbar-brand mb-0 h1">投稿編集</span>
-        </div>
-    </nav>
-
+@section('content')
     <div class="container">
         <button type="button" class="btn btn-outline-secondary mb-3" data-bs-toggle="modal" data-bs-target="#backModal">
                 投稿一覧に戻る
@@ -27,13 +12,33 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div>
-                        <label for="title" required class="d-block form-label">タイトル</label>
-                        <input type="text" name="title" id="title" value="{{ $post->title }}" required class="d-block form-control">
+                        <label for="title" class="d-block form-label">タイトル</label>
+                        <input type="text" name="title" id="title" value="{{ old('title', $post->title) }}" class="d-block form-control @error('title') is-invalid @enderror">
                     </div>
-                    <div x-data x-init="ClassicEditor.create($refs.editor).catch(error => { console.error(error); });" class="mb-3">
-                        <label for="content" class="d-block form-label" required>内容</label>
-                        <textarea name="content" id="editor" required class="d-block form-control" x-ref="editor">{{ $post->content }}</textarea>
+                    @error('title')
+                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                    @enderror
+                    <div x-data x-init="
+                        ClassicEditor.create($refs.editor, {
+                            licenseKey: 'GPL',
+                            plugins: [
+                                CKEditorPlugins.Essentials,
+                                CKEditorPlugins.Paragraph,
+                                CKEditorPlugins.Bold,
+                                CKEditorPlugins.Italic,
+                                CKEditorPlugins.Link,
+                                CKEditorPlugins.Heading,
+                                CKEditorPlugins.SourceEditing,
+                            ],
+                            toolbar: ['heading', '|', 'bold', 'italic', 'link', '|', 'sourceEditing'],
+                        }).catch(error => { console.error(error); });
+                        " class="mb-3 @error('content') has-error @enderror">
+                        <label for="editor" class="d-block form-label">内容</label>
+                        <textarea style="display: none" name="content" class="form-control @error('content') is-invalid @enderror" id="editor" x-ref="editor">{{ old('content', $post->content) }}</textarea>
                     </div>
+                    @error('content')
+                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
             <div class="d-flex justify-content-end">
@@ -44,34 +49,32 @@
 
     <!-- 戻る確認モーダル -->
     <div class="modal fade" id="backModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title">確認</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header">
+                    <h5 class="modal-title">確認</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    編集中の内容は保存されません。<br>
+                    投稿一覧に戻りますか？
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                        キャンセル
+                    </button>
+
+                    <a href="{{ route('posts.index') }}" class="btn btn-primary">
+                        戻る
+                    </a>
+                </div>
             </div>
-
-            <div class="modal-body">
-                編集中の内容は保存されません。<br>
-                投稿一覧に戻りますか？
-            </div>
-
-            <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal">
-                    キャンセル
-                </button>
-
-                <a href="{{ route('posts.index') }}" class="btn btn-primary">
-                    戻る
-                </a>
-            </div>
-
         </div>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-</html>
+    </div>
+@endsection
